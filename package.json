@@ -4,12 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose"
+    "test": "jest --watchAll"
   },
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/"
-},
   "keywords": [],
   "author": "",
   "license": "ISC",
