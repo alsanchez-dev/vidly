@@ -8,3 +8,5 @@
 {"level":"info","message":"Connected to MongoDB...","timestamp":"2018-02-06T21:39:24.124Z"}
 {"level":"info","message":"Listening on port 3000...","timestamp":"2018-11-23T12:51:48.966Z"}
 {"level":"info","message":"Connected to mongodb://localhost/vidly_tests...","timestamp":"2018-11-23T12:51:49.010Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2018-11-23T13:07:10.939Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vidly_tests...","timestamp":"2018-11-23T13:07:11.051Z"}
