@@ -74,10 +74,11 @@ describe('/api/genres', ()=>{
         it('should return 400 if genre is more than 5 characters', async ()=>{
             const token = new User().generateAuthToken();
 
+            const name = new Array(52).join('a');
             const res = await request(server)
             .post('/api/genres')
             .set('x-auth-token', token)
-            .send({ name: '1234' });
+            .send({ name: name });
 
             expect(res.status).toBe(400);
     });
