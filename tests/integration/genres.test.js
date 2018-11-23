@@ -71,17 +71,19 @@ describe('/api/genres', ()=>{
             expect(res.status).toBe(400);
         });
 
-        it('should return 400 if genre is more than 50 characters', async ()=>{
+        it('should save the genre if it is valid', async ()=>{
             const token = new User().generateAuthToken();
 
-            const name = new Array(52).join('a');
-            
-            const res = await request(server)
+
+
+        const res = await request(server)
             .post('/api/genres')
             .set('x-auth-token', token)
-            .send({ name: name });
+            .send({ name: 'genre1' });
 
-            expect(res.status).toBe(400);
+        const genre = await Genre.find({ name: 'genre1'});
+
+        expect(genre).not.toBeNull();
         });
     });
 });
