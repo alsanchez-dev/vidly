@@ -1,48 +1,46 @@
 const {User} = require('../../models/user');
-const {Genre} = require('../../models/genre')
+const {Genre} = require('../../models/genre');
 const request = require('supertest');
 
+describe('auth middleware', () => {
+  beforeEach(() => { server = require('../../index'); })
+  afterEach(async () => {
+    await Genre.remove({});
+    server.close();
+  });
 
+  let token;
 
-describe('auth middleware', ()=>{
-    beforeEach(()=>{ server = require('../../index'); })
-    afterEach(async () => {
-        await Genre.remove({});
-        server.close();
-    });
+  const exec = () => {
+    return request(server)
+      .post('/api/genres')
+      .set('x-auth-token', token)
+      .send({ name: 'genre1' });
+  }
 
-    let token;
+  beforeEach(() => {
+    token = new User().generateAuthToken();
+  });
 
-    const exec = ()=>{
-        return request(server)
-        .post('/api/genres')
-        .set('x-auth.token', token)
-        .send({ name: 'genre1' });
-    }
+  it('should return 401 if no token is provided', async () => {
+    token = '';
 
-    beforeEach(() => {
-        token = new User().generateAuthToken();
-    });
+    const res = await exec();
 
-    it('should return 401 if no token is provided', async ()=>{
-        token = '';
+    expect(res.status).toBe(401);
+  });
 
-        const res = await exec();
+  it('should return 400 if token is invalid', async () => {
+    token = 'a';
 
-        expect(res.status).toBe(401);
-    });
+    const res = await exec();
 
-    it('should return 400 if token is invalid', async ()=>{
-        token = 'a';
+    expect(res.status).toBe(400);
+  });
 
-        const res = await exec();
+  it('should return 200 if token is valid', async () => {
+    const res = await exec();
 
-        expect(res.status).toBe(400);
-    });
-
-    it('should return 200 if token is valid', async ()=>{
-        const res = await exec();
-
-        expect(res.status).toBe(200);
-    });
+    expect(res.status).toBe(200);
+  });
 });
